@@ -1,6 +1,9 @@
 #ifndef _QUEUE_H
 #define _QUEUE_H
 
+// A small modification that suits our implementation.
+typedef struct queue_node* queue_node_t;
+
 /*
  * queue_t - Queue type
  *
