@@ -1,13 +1,10 @@
-// FIXME: Fix spacing.
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-// FIXME: Remove.
 #include <stdio.h>
 
 #include "queue.h"
 
-// FIXME: Add comments to everything.
 struct queue_node {
     void* data;
     struct queue_node* next;
@@ -165,75 +162,3 @@ int queue_length(queue_t queue)
 
     return queue->length;
 }
-
-// FIXME: Remove.
-void queue_print(queue_t queue){
-	printf("Queue length: %d\n", queue->length);
-	printf("Queue contents: [");
-	queue_node_t current_node = queue->front;
-	while (current_node != NULL) {
-		//printf("%d, ", (int)current_node->data);
-		current_node = current_node->next;
-	}
-	if (queue->length != 0) {
-		printf("\b\b]\n");
-	} else {
-		printf("]\n");
-	}
-
-}
-
-// FIXME: Remove.
-/*
-int main(){
-	int data;
-	int* ptr = &data;
-
-	queue_t queue = queue_create();
-	queue_enqueue(queue, 1);
-	queue_print(queue);
-	queue_enqueue(queue, 2);
-	queue_print(queue);
-	queue_enqueue(queue, 3);
-	queue_print(queue);
-
-	queue_dequeue(queue, &ptr);
-	queue_print(queue);
-	queue_dequeue(queue, &ptr);
-	queue_print(queue);
-	queue_dequeue(queue, &ptr);
-	queue_print(queue);
-	
-	queue_enqueue(queue, 1);
-	queue_print(queue);
-	queue_enqueue(queue, 2);
-	queue_print(queue);
-	queue_enqueue(queue, 3);
-	queue_print(queue);
-	queue_enqueue(queue, 4);
-	queue_print(queue);
-
-	queue_delete(queue, 2);
-	queue_print(queue);
-	queue_delete(queue, 1);
-	queue_print(queue);
-	queue_delete(queue, 4);
-	queue_print(queue);
-	queue_delete(queue, 3);
-	queue_print(queue);
-
-	queue_enqueue(queue, 1);
-	queue_print(queue);
-
-	int return_val = queue_delete(queue, 2);
-	printf("Delete retd %d!\n", return_val);
-	queue_print(queue);
-
-	queue_dequeue(queue, &ptr);
-	queue_print(queue);
-
-	return_val = queue_destroy(queue);
-	printf("Destroy retd %d!\n", return_val);
-
-	return 0;
-}*/
