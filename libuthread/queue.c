@@ -1,3 +1,4 @@
+// FIXME: Fix spacing.
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,21 +21,13 @@ struct queue {
 
 queue_t queue_create(void)
 {
-    queue_node_t my_queue_node = (queue_node_t)malloc(sizeof(struct queue_node));
-    if (my_queue_node == NULL) {
-		return NULL;
-    }
-
-	my_queue_node->data = NULL;
-    my_queue_node->next = NULL;
-
-    queue_t my_queue = (queue_t)malloc(sizeof(struct queue));
+	queue_t my_queue = (queue_t)malloc(sizeof(struct queue));
     if (my_queue == NULL) {
 		return NULL;
     }
 
-	my_queue->front = my_queue_node;
-	my_queue->back = my_queue_node;
+	my_queue->front = NULL;
+	my_queue->back = NULL;
 	my_queue->length = 0;
 
 	return my_queue;
@@ -125,7 +118,6 @@ int queue_delete(queue_t queue, void *data)
 		return 0;
 	}
 	else if (current_queue_node == queue->back){
-		printf("Entered back\n");
 		free(queue->back);
 		queue->back = previous_queue_node;
 		queue->back = previous_queue_node;
@@ -133,7 +125,6 @@ int queue_delete(queue_t queue, void *data)
 		return 0;
 	}
 	else if (current_queue_node == queue->front){
-		printf("Entered front\n");
 		queue_node_t new_front_node = queue->front->next;
 		free(queue->front);
 		queue->front = new_front_node;
@@ -147,7 +138,6 @@ int queue_delete(queue_t queue, void *data)
 	return -1;
 }
 
-// FIXME: Test this.
 int queue_iterate(queue_t queue, queue_func_t func, void *arg, void **data)
 {
 	if (queue == NULL || func == NULL) {
@@ -157,7 +147,7 @@ int queue_iterate(queue_t queue, queue_func_t func, void *arg, void **data)
 	queue_node_t current_node = queue->front;
 	while (current_node != NULL) {
 		if (!((*func)(queue, current_node->data, arg))) {
-			continue;
+			current_node = current_node->next;
 		} else {
 			*data = current_node->data;
 			return 0;
@@ -182,7 +172,7 @@ void queue_print(queue_t queue){
 	printf("Queue contents: [");
 	queue_node_t current_node = queue->front;
 	while (current_node != NULL) {
-		printf("%d, ", (int)current_node->data);
+		//printf("%d, ", (int)current_node->data);
 		current_node = current_node->next;
 	}
 	if (queue->length != 0) {
@@ -194,6 +184,7 @@ void queue_print(queue_t queue){
 }
 
 // FIXME: Remove.
+/*
 int main(){
 	int data;
 	int* ptr = &data;
@@ -245,4 +236,4 @@ int main(){
 	printf("Destroy retd %d!\n", return_val);
 
 	return 0;
-}
+}*/
