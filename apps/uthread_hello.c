@@ -21,6 +21,7 @@ int main(void)
 
 	uthread_start(0);
 	tid = uthread_create(hello);
+	(void)tid;
 	uthread_join(tid, NULL);
 	uthread_stop();
 

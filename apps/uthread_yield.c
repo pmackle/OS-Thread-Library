@@ -24,7 +24,7 @@ int thread3(void)
 
 int thread2(void)
 {
-	uthread_create(thread3);
+	uthread_join(uthread_create(thread3), NULL);
 	uthread_yield();
 	printf("thread%d\n", uthread_self());
 	return 0;
@@ -32,7 +32,7 @@ int thread2(void)
 
 int thread1(void)
 {
-	uthread_create(thread2);
+	uthread_join(uthread_create(thread2), NULL);
 	uthread_yield();
 	printf("thread%d\n", uthread_self());
 	uthread_yield();

@@ -5,7 +5,6 @@
 
 #include <queue.h>
 
-
 #define TEST_ASSERT(assert)				\
 do {									\
 	printf("ASSERT: " #assert " ... ");	\
@@ -43,7 +42,7 @@ void test_queue_length(){
 	int set[3] = {0, 1, 2};
 	queue_t queue = queue_create();
 
-	fprintf(stderr, "*** TEST queue_length ***\n");
+	fprintf(stderr, "*** TEST queue length ***\n");
 
 	for (int i = 0; i < 3; i++) {
 		queue_enqueue(queue, &set[i]);	
@@ -54,7 +53,7 @@ void test_queue_length(){
 
 void test_queue_null_length(){
 	queue_t queue = NULL;
-	fprintf(stderr, "*** TEST queue_null_length ***\n");
+	fprintf(stderr, "*** TEST null queue length ***\n");
 
 	int error_value = queue_length(queue);
 	TEST_ASSERT(error_value == -1);
@@ -65,7 +64,7 @@ void test_delete(void)
 	int set[3] = {0, 1, 2};
 	queue_t queue = queue_create();
 
-	fprintf(stderr, "*** TEST queue_delete ***\n");
+	fprintf(stderr, "*** TEST delete queue ***\n");
 
 	for (int i = 0; i < 3; i++) {
 		queue_enqueue(queue, &set[i]);	
@@ -75,52 +74,20 @@ void test_delete(void)
 	TEST_ASSERT(queue_length(queue) == 2);
 }
 
-// FIXME
-// void test_delete_front(void)
-// {
-// 	queue_t queue = queue_create();
-// 	int set[3] = {0, 1, 2};
-	
-// 	fprintf(stderr, "*** TEST queue_delete_front ***\n");
-
-// 	for (int i = 0; i < 3; i++) {
-// 		queue_enqueue(queue, &set[i]);	
-// 	}
-	
-// 	queue_delete(queue, &set[0]);
-// 	TEST_ASSERT(queue_length(queue) == 2);
-// }
-
-// FIXME
-// void test_delete_back(void)
-// {
-// 	int set[3] = {0, 1, 2};
-// 	queue_t queue = queue_create();
-
-// 	fprintf(stderr, "*** TEST queue_delete_back ***\n");
-
-// 	for (int i = 0; i < 3; i++) {
-// 		queue_enqueue(queue, &set[i]);	
-// 	}
-
-// 	queue_delete(queue, &set[2]);
-// 	TEST_ASSERT(queue_length(queue) == 2);
-// }
-
 void test_delete_not_found(void)
 {
 	int set[3] = {0, 1, 2};
 	int doesnt_exist = 100;
 	queue_t queue = queue_create();
 
-	fprintf(stderr, "*** TEST queue_delete_not_found ***\n");
+	fprintf(stderr, "*** TEST delete not found value ***\n");
 
 	for (int i = 0; i < 3; i++) {
 		queue_enqueue(queue, &set[i]);	
 	}
 
 	int error_value = queue_delete(queue, &doesnt_exist);
-	TEST_ASSERT(error_value == (-1)*EXIT_FAILURE);
+	TEST_ASSERT(error_value == -1);
 }
 
 void test_queue_destroy()
@@ -130,7 +97,7 @@ void test_queue_destroy()
 
 	queue_t queue = queue_create();
 
-	fprintf(stderr, "*** TEST queue_delete_destroy ***\n");
+	fprintf(stderr, "*** TEST destroy queue ***\n");
 
 	for (int i = 0; i < 3; i++) {
 		queue_enqueue(queue, &set[i]);	
@@ -149,20 +116,20 @@ void test_queue_destroy_not_empty(){
 
 	queue_t queue = queue_create();
 
-	fprintf(stderr, "*** TEST queue_destroy_not_empty ***\n");
+	fprintf(stderr, "*** TEST destroy not empty queue ***\n");
 
 	for (int i = 0; i < 3; i++) {
 		queue_enqueue(queue, &set[i]);	
 	}
 
 	int error_value = queue_destroy(queue);
-	TEST_ASSERT(error_value == -EXIT_FAILURE);
+	TEST_ASSERT(error_value == -1);
 }
 
 void test_dequeue_size_zero() {
 	int *ptr;
 
-	fprintf(stderr, "*** TEST dequeue empty list***\n");
+	fprintf(stderr, "*** TEST dequeue empty queue***\n");
 
 	queue_t queue = queue_create();
 
@@ -174,7 +141,7 @@ void test_dequeue_string_array() {
 	char* set[] = {"zero", "one", "two"};
 	queue_t queue = queue_create();
 
-	fprintf(stderr, "*** TEST dequeue string array***\n");
+	fprintf(stderr, "*** TEST dequeue string queue***\n");
 	
 	for (int i = 0; i < 3; i++) {
 		queue_enqueue(queue, &set[i]);	
@@ -186,7 +153,8 @@ void test_dequeue_string_array() {
 
 }
 
-//Taken from project prompt
+// Taken from project prompt.
+
 /* Callback function that increments integer items by a certain value (or delete
  * item if item is value 42) */
 int inc_item(queue_t q, void *data, void *arg)
@@ -220,7 +188,7 @@ void test_iterator(void)
     size_t i;
 	int *ptr;
 
-	fprintf(stderr, "*** TEST test_iterator ***\n");
+	fprintf(stderr, "*** TEST iterator ***\n");
     /* Initialize the queue and enqueue items */
     q = queue_create();
 
@@ -240,20 +208,12 @@ void test_iterator(void)
 
 }
 
-
-void test_everything(void)
-{
-	
-}
-
 int main(void)
 {
 	test_create();
 	test_queue_simple();
 	test_queue_length();
 	test_queue_null_length();
-//	test_delete_front();
-//	test_delete_back();
 	test_delete();
 	test_delete_not_found();
 	test_queue_destroy();
@@ -261,5 +221,6 @@ int main(void)
 	test_iterator();
 	test_dequeue_size_zero();
 	test_dequeue_string_array();
+	
 	return 0;
 }
